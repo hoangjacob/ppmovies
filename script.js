@@ -1,4 +1,4 @@
-// and also
+// WHY DO I HAVE AN API KEY PUBLICLY AVAILABLE LMFAO
 const apikey = "853c77bd76b2772ab88ab049ad08d610";
 
 async function getpopular() {
@@ -27,7 +27,7 @@ function displaypopular(movies) {
 }
 
 function embed(movieId) {
-   const embedurl = `https://vidsrc.rip/embed/movie/${movieId}`;
+   const embedurl = `https://player.autoembed.cc/embed/movie/${movieId}`;
    const player = document.getElementById('player');
    const overlay = document.getElementById('dicknballs');
 
