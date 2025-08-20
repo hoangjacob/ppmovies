@@ -27,7 +27,7 @@ function displaypopular(movies) {
 }
 
 function embed(movieId) {
-   const embedurl = `https://vidsrc.xyz/embed/movie/tt${movieId}`;
+   const embedurl = `https://vidsrc.xyz/embed/movie?tmdb=${movieId}/`;
    const player = document.getElementById('player');
    const overlay = document.getElementById('dicknballs');
 
