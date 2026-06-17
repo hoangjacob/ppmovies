@@ -173,8 +173,8 @@ function setupOverlay() {
 
 function openPlayer(id) {
   const src = mode === "movie"
-    ? `https://vidsrc.xyz/embed/movie/${id}`
-    : `https://vidsrc.pro/embed/tv/${id}`;
+    ? `https://vidsrcme.ru/embed/movie/${id}`
+    : `https://vidsrcme.ru/embed/tv/${id}`;
   document.getElementById("player").src = src;
   document.getElementById("player-overlay").classList.add("active");
   document.body.style.overflow = "hidden";
