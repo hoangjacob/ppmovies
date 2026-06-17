@@ -54,6 +54,32 @@
       </div>
     </main>
 
+    <!-- Show details overlay: seasons + episodes -->
+    <div
+      id="show-overlay"
+      class="show-overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Show details"
+    >
+      <button class="close-btn" id="show-close-btn" aria-label="Close">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="show-content">
+        <div class="show-hero">
+          <div class="show-hero-bg" id="show-backdrop"></div>
+          <div class="show-hero-info">
+            <h2 id="show-title"></h2>
+            <p id="show-overview"></p>
+          </div>
+        </div>
+
+        <div class="season-tabs" id="season-tabs"></div>
+        <div class="episode-list" id="episode-list"></div>
+      </div>
+    </div>
+
     <!-- Player overlay -->
     <div
       id="player-overlay"
