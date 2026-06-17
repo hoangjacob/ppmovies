@@ -133,13 +133,7 @@ function renderGrid(items) {
       </div>
     `;
 
-    const open = () => {
-      if (mode === "tv") {
-        openShowDetails(item.id, title, item.backdrop_path);
-      } else {
-        openPlayer(item.id);
-      }
-    };
+    const open = () => openDetails(item.id, title, item.backdrop_path);
     card.addEventListener("click", open);
     card.addEventListener("keydown", e => {
       if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); }
@@ -211,7 +205,7 @@ function setupShowOverlay() {
   overlay.addEventListener("click", e => { if (e.target === overlay) closeShowOverlay(); });
 }
 
-async function openShowDetails(id, fallbackTitle, fallbackBackdrop) {
+async function openDetails(id, fallbackTitle, fallbackBackdrop) {
   const overlay = document.getElementById("show-overlay");
   overlay.classList.add("active");
   overlay.scrollTop = 0;
@@ -220,6 +214,32 @@ async function openShowDetails(id, fallbackTitle, fallbackBackdrop) {
   document.getElementById("show-title").textContent = fallbackTitle;
   document.getElementById("show-overview").textContent = "";
   setShowBackdrop(fallbackBackdrop);
+
+  if (mode === "movie") {
+    document.getElementById("movie-actions").classList.remove("hidden");
+    document.getElementById("season-tabs").classList.add("hidden");
+    document.getElementById("episode-list").classList.add("hidden");
+    document.getElementById("movie-meta").innerHTML = "";
+
+    const data = await tmdb(`movie/${id}`);
+    if (!data) return;
+
+    document.getElementById("show-title").textContent = data.title || fallbackTitle;
+    document.getElementById("show-overview").textContent = data.overview || "";
+    setShowBackdrop(data.backdrop_path || fallbackBackdrop);
+    renderMovieMeta(data);
+
+    document.getElementById("movie-play-btn").onclick = () => {
+      closeShowOverlay();
+      openPlayer(id);
+    };
+    return;
+  }
+
+  // TV branch
+  document.getElementById("movie-actions").classList.add("hidden");
+  document.getElementById("season-tabs").classList.remove("hidden");
+  document.getElementById("episode-list").classList.remove("hidden");
   document.getElementById("season-tabs").innerHTML = "";
   showEpisodeSkeletons();
 
@@ -242,6 +262,24 @@ async function openShowDetails(id, fallbackTitle, fallbackBackdrop) {
     document.getElementById("episode-list").innerHTML =
       `<p class="episode-empty">No season info available for this show.</p>`;
   }
+}
+
+function renderMovieMeta(data) {
+  const year    = (data.release_date || "").slice(0, 4);
+  const hrs     = data.runtime ? Math.floor(data.runtime / 60) : null;
+  const mins    = data.runtime ? data.runtime % 60 : null;
+  const runtime = data.runtime ? `${hrs}h ${mins}m` : null;
+  const score   = data.vote_average ? data.vote_average.toFixed(1) : null;
+  const genres  = (data.genres || []).map(g => g.name);
+
+  document.getElementById("movie-meta").innerHTML = `
+    <div class="meta-line">
+      ${year ? `<span>${year}</span>` : ""}
+      ${runtime ? `<span>${runtime}</span>` : ""}
+      ${score ? `<span class="meta-score"><i class="fa-solid fa-star"></i>${score}</span>` : ""}
+    </div>
+    ${genres.length ? `<div class="genre-row">${genres.map(g => `<span class="genre-chip">${g}</span>`).join("")}</div>` : ""}
+  `;
 }
 
 function setShowBackdrop(path) {
