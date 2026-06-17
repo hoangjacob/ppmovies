@@ -1,35 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="referrer" content="origin" />
-      <title>ppmovies</title>
-      <link rel="stylesheet" href="style.css">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-   </head>
-   <!-- i see u there lol --> 
-   <body>
-      <div id="titlelol">
-         <h1>ppmovies</h1>
-         <input type="text" id="movie" placeholder="Enter movie name">
-         <button id="buttonlol" onclick="searchMovie()"><i class="fa-solid fa-magnifying-glass"></i></button>
-         <script>
-            var input = document.getElementById("movie");
-            input.addEventListener("keypress", function(event) {
-              if (event.key === "Enter") {
-                event.preventDefault();
-                document.getElementById("buttonlol").click();
-              }
-            });
-         </script>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="origin">
+    <title>ppmovies</title>
+    <link rel="stylesheet" href="style.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    >
+  </head>
+  <body>
+
+    <header class="site-header">
+      <a class="brand" href="#">ppmovies</a>
+
+      <nav class="tabs" role="tablist" aria-label="Content type">
+        <button class="tab active" role="tab" data-mode="movie" aria-selected="true">Movies</button>
+        <button class="tab"         role="tab" data-mode="tv"    aria-selected="false">TV Shows</button>
+      </nav>
+
+      <div class="search-wrap">
+        <input
+          type="search"
+          id="search-input"
+          placeholder="Search movies…"
+          aria-label="Search"
+          autocomplete="off"
+        >
+        <button class="search-btn" id="search-btn" aria-label="Run search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
       </div>
-      <div id="popular"></div>
-      <div id="results"></div>
-      <div id="dicknballs">
-         <button id="close" onclick="closeOverlay()">&#10005;</button>
-         <iframe id="player" allowfullscreen></iframe>
+    </header>
+
+    <main>
+      <div class="section-bar">
+        <h2 id="section-title">Popular Movies</h2>
+        <button class="back-btn hidden" id="back-btn">
+          <i class="fa-solid fa-arrow-left"></i> Back to popular
+        </button>
       </div>
-      <script src="script.js"></script>
-   </body>
+
+      <div id="grid" class="grid" role="list"></div>
+
+      <div id="empty-state" class="empty-state hidden" aria-live="polite">
+        <i class="fa-regular fa-face-sad-tear"></i>
+        <p id="empty-msg">Nothing found</p>
+      </div>
+    </main>
+
+    <!-- Player overlay -->
+    <div
+      id="player-overlay"
+      class="player-overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Video player"
+    >
+      <button class="close-btn" id="close-btn" aria-label="Close player">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <iframe id="player" allowfullscreen title="Video player"></iframe>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
 </html>
