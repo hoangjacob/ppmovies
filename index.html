@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="referrer" content="origin">
     <title>ppmovies</title>
     <link rel="stylesheet" href="style.css">
@@ -98,7 +98,19 @@
       <button class="close-btn" id="close-btn" aria-label="Close player">
         <i class="fa-solid fa-xmark"></i>
       </button>
-      <iframe id="player" allowfullscreen title="Video player"></iframe>
+      <!--
+        Sandboxed deliberately: allow-scripts + allow-same-origin let the
+        embed actually play video, but allow-popups and allow-top-navigation
+        are left OUT so the embed can't open popup tabs or redirect this
+        page when someone clicks an ad inside it.
+      -->
+      <iframe
+        id="player"
+        title="Video player"
+        allowfullscreen
+        sandbox="allow-scripts allow-same-origin allow-presentation"
+        referrerpolicy="no-referrer"
+      ></iframe>
     </div>
 
     <script src="script.js"></script>
